@@ -35,27 +35,14 @@ vector<int> solution(vector<int> sequence, int k) {
             temp+=sequence[i]; 
 
             if(temp==k)
-           { 
-                if((sequence[answer[0]]==sequence[answer[1]]))
+           {        
+                 while(i>0&&sequence[answer[0]-1]==sequence[answer[1]])
                 {
-                    if(i==0)
-                    {
-                        break;
-                    }
-                    else if(sequence[i]!=sequence[i-1])
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        temp-=sequence[answer[1]];
-                        answer[1]=answer[1]-1; 
-                    }
+                    i--;
+                    answer[0]=i;
+                    answer[1]=answer[1]-1;
                 }
-                else
-                {
-                    break;
-                }
+                break;
             }
             else if(temp>k)
             {
