@@ -4,53 +4,50 @@
 using namespace std;
 static vector<int> buffer;
 static vector<int> v;
-
-void Msort(int s, int e)
+void Msort(int size, int index)
 {
-	if (e - s < 1)
+	int half = size / 2;
+	if (size == 1)
+	{
 		return;
-
-	int m = s + (e - s) / 2;
-
-	Msort(s, m);
-	Msort(m+1, e);
-
-	for (int i = s; i <= e; i++)
-		buffer[i] = v[i];
-
-	int k = s;
-	int index1 = s;
-	int index2 = m + 1;
-
-	while (index1 <= m && index2 <= e)
+	}
+	else if (size == 2)
 	{
-		if (buffer[index1] < buffer[index2])
-		{
-			v[k] = buffer[index1];
-			index1++;
-			k++;
-		}
-		else
-		{
-			v[k] = buffer[index2];
-			index2++;
-			k++;
-		}
+		if (v[index] > v[index + 1])
+			swap(v[index], v[index+1]);
+
+		return;
+	}
+	else
+	{
+		Msort(half, index);
+		Msort(size - half, index + half);
+	}
+		
+	int index1 = index;
+	int index2 = half + index;
+	int end1 = half + index;
+	int end2 = index + size;
+	int j = index;
+
+	while (index1 < end1 && index2 < end2)
+	{
+		v[index1] < v[index2] ?
+			buffer[j++] = v[index1++] : buffer[j++] = v[index2++];
+	}
+	
+	while (index1 < end1)
+	{
+		buffer[j++] = v[index1++];
 	}
 
-	while (index1 <= m)
+	while (index2 < end2)
 	{
-		v[k] = buffer[index1];
-		index1++;
-		k++;
+		buffer[j++] = v[index2++];
 	}
 
-	while (index2 <= e)
-	{
-		v[k] = buffer[index2];
-		index2++;
-		k++;
-	}
+	for (int i = index; i < index + size; i++)
+		v[i] = buffer[i];
 }
 
 int main()
@@ -62,16 +59,15 @@ int main()
 	int N;
 	cin >> N;
 
-	v=vector<int>(N+1,0);
-	buffer = vector<int>(N+1, 0);
-	for (int i = 1; i <= N; i++)
-	{
-		cin >> v[i];
-	}
+	v=vector<int>(N,0);
+	buffer = vector<int>(N, 0);
+	for (int i = 0; i < N; i++)
+	    cin >> v[i];
 
-	Msort(1, N);
-	for (int i=1; i<=N;i++)
+	Msort(v.size(), 0);
+    
+	for (int& number : v)
 	{
-		cout << v[i] << "\n";
+		cout << number << "\n";
 	}
 }
