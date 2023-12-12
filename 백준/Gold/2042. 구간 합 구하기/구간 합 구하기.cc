@@ -4,14 +4,12 @@
 using namespace std;
 
 vector<long> tree;
-void UpdateTree(int node, long val)
+void UpdateTree(int node)
 {
-	long diff = val - tree[node];
-	while (node > 0)
-	{
-		tree[node] = tree[node] + diff;
-		node = node / 2;
-	}
+	if (node == 1)return;
+
+	tree[node / 2] = tree[node / 2 * 2] + tree[node / 2 * 2 + 1];
+	UpdateTree(node / 2);
 }
 
 long GetSum(int s, int e)
@@ -71,7 +69,8 @@ int main()
 		cin >> temp >> b >> c;
 		if (temp == 1)
 		{
-			UpdateTree(leafIndex + b - 1, c);
+			tree[leafIndex + b - 1] = c;
+			UpdateTree(leafIndex + b - 1);
 		}
 		else
 		{
