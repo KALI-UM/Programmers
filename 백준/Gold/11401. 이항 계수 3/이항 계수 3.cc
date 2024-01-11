@@ -16,7 +16,7 @@ long long factorial(long long n, long long e)
 long long Lpow(long long base, long long  n)
 {
 	if (n == 0)return 1;
-	if (n % 2 > 0)return (Lpow(base, n - 1) * base) % mod;
+	if (n % 2 ==1)return (Lpow(base, n - 1) * base) % mod;
 	else
 	{
 		long long half = Lpow(base, n / 2) % mod;
