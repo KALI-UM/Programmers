@@ -31,8 +31,8 @@ int main()
 	cout.tie(NULL);
 	long long  N, K;
 	cin >> N >> K;
-	long long top = factorial(N, N - K) % mod;
-	long long bottom = Lpow(factorial(K, 1) % mod, mod - 2) % mod;
+	long long top = factorial(N, 1) % mod;
+	long long bottom = Lpow(((factorial(N-K,1) % mod)*(factorial(K, 1) % mod))%mod, mod - 2) % mod;
 	long long answer = (top * bottom) % mod;
 	cout << answer << "\n";
 }
