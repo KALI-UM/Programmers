@@ -26,10 +26,7 @@ void BFS()
 		q.pop();
 
 		if (curr == E)
-		{
-			Memo[curr] = cost;
 			return;
-		}
 
 		for (int i = 0; i < Edge[curr].size(); i++)
 		{
