@@ -3,8 +3,8 @@ using namespace std;
 int N;
 int K;
 
-long long DP[210][210];
-long long mod = 1000000000;
+int DP[210][210];
+int mod = 1000000000;
 int main()
 {
 	ios::sync_with_stdio(false);
