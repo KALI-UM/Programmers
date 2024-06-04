@@ -1,45 +1,28 @@
 #include <iostream>
-#include <set>
 #include <queue>
 using namespace std;
 int N, M;
-int BFS()
-{
-	set<int> memo;
-	queue<pair<int, int>> q;
-	q.push({ 0,N });
-	memo.emplace(N);
 
+int dist[200002];
+
+void BFS()
+{
+	fill(&dist[0], &dist[2 * (N < M ? M : N)], -1);
+	queue<int> q;
+	q.push(N);
+	dist[N] = 0;
 	while (!q.empty())
 	{
-		int t = q.front().first;
-		int nowp = q.front().second;
+		int curr = q.front();
 		q.pop();
-		
-		if (nowp == M)return t;
-		if (nowp < M)
+		if (curr == M)break;
+		for (int next : {curr + 1, curr - 1, curr * 2})
 		{
-			int now1 = nowp + 1;
-			if (memo.find(now1) == memo.end())
-			{
-				q.push({ t + 1, now1 });
-				memo.emplace(now1);
-			}
-			int now3 = nowp * 2;
-			if (memo.find(now3) == memo.end())
-			{
-				q.push({ t + 1, now3 });
-				memo.emplace(now3);
-			}
-		}
-		int now2 = nowp - 1;
-		if (now2 >= 0 && memo.find(now2) == memo.end())
-		{
-			q.push({ t + 1, now2 });
-			memo.emplace(now2);
+			if (next < 0 || next > 2 * (N < M ? M : N) || dist[next] != -1)continue;
+			dist[next] = dist[curr] + 1;
+			q.push(next);
 		}
 	}
-	return -1;
 }
 
 int main()
@@ -48,6 +31,6 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 	cin >> N >> M;
-
-	cout << BFS() << '\n';
+	BFS();
+	cout << dist[M] << '\n';
 }
