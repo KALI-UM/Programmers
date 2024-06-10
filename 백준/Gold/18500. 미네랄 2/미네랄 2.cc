@@ -12,7 +12,7 @@ int dir[4][2] = { {1,0}, {0,1 },{-1,0},{0,-1} };
 void BFS(int r, int c)
 {
 	queue<pair<int, int>> q;
-	fill(&Visited[0][0], &Visited[100][101], -1);
+	fill(&Visited[0][0], &Visited[99][100], -1);
 	Cave[r][c] = '.';
 
 	bool dirGrounded[4] = { false, false, false , false };
