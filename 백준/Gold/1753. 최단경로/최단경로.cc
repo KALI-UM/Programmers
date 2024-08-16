@@ -1,39 +1,16 @@
 #include <iostream>
-#include <vector>
+
 #include <queue>
-#include <limits.h>
+#include <vector>
+#include <climits>
+
 using namespace std;
-//다익스트라
+int V, E;
+int Start;
+vector<int> result;
+vector<bool> visited;
 vector<vector<pair<int, int>>> list;
-vector<int> dist;
-void BFS(int s)
-{
-	vector<bool> visited(list.size(), false);
-	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> q;
-	dist[s] = 0;
-	q.emplace(dist[s], s);
-	while (!q.empty())
-	{
-		pair<int, int> nownode = q.top();
-		q.pop();
-
-		if (visited[nownode.second])continue;
-		visited[nownode.second] = true;
-
-		for (int i = 0; i < list[nownode.second].size(); i++)
-		{
-			int n = list[nownode.second][i].first;
-			int d = list[nownode.second][i].second;
-
-			if (dist[n] > dist[nownode.second] + d)
-			{
-				dist[n] = dist[nownode.second] + d;
-				q.emplace(dist[n], n);
-			}
-		}
-	}
-}
-
+priority_queue < pair<int, int >> Edges;
 
 int main()
 {
@@ -41,28 +18,48 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int N, E, S;
-	cin >> N >> E >> S;
+	cin >> V >> E >> Start;
 
-	list.resize(N + 1);
-	dist = vector<int>(N + 1, INT_MAX);
-	dist[S] = 0;
-	int a, b, d;
+	result = vector<int>(V + 1, INT_MAX);
+	result[Start] = 0;
+	visited = vector<bool>(V + 1, false);
+	list = vector<vector<pair<int, int>>>(V + 1);
+
+	int u, v, w;
 	for (int i = 0; i < E; i++)
 	{
-		cin >> a >> b >> d;
-		list[a].push_back(make_pair(b, d));
+		cin >> u >> v >> w;
+		list[u].push_back({ v,w });
 	}
 
-	BFS(S);
-
-	for (int i = 1; i <= N; i++)
+	Edges.push({ 0,Start });
+	while (!Edges.empty())
 	{
-		if (dist[i] != INT_MAX)
-			cout << dist[i] << "\n";
+		int curr = Edges.top().second;
 
-		else
-			cout << "INF" << "\n";
+		Edges.pop();
+
+		if (visited[curr])continue;
+		visited[curr] = true;
+
+		for (int i = 0; i < list[curr].size(); i++)
+		{
+			int next = list[curr][i].first;
+			int curr2next = list[curr][i].second;
+			if (result[next] >= INT_MAX || result[next] > result[curr] + curr2next)
+			{
+				result[next] = result[curr] + curr2next;
+				Edges.push({ -result[next], next });
+			}
+		}
 	}
 
+	for (int i = 1; i <= V; i++)
+	{
+		if (visited[i])
+			cout << result[i] << '\n';
+		else
+			cout << "INF" << '\n';
+	}
 }
+
