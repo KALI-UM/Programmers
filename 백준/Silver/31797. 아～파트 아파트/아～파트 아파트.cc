@@ -21,22 +21,19 @@ int main()
 		apart.push({ -h2, i });
 	}
 
-	queue<int> apart_sorted;
+	int floor = 1;
+	if(N>2*M)floor+= N - (N % (2 * M));
 	while (!apart.empty())
 	{
-		apart_sorted.push(apart.top().second);
-		apart.pop();	
-	}
-
-	int floor = 1;
-	while (floor!=N)
-	{
-		apart_sorted.push(apart_sorted.front());
-		apart_sorted.pop();
+		int curr = apart.top().second;
+		apart.pop();
+		if (floor == N)
+		{
+			result = curr;
+			break;
+		}
 		floor++;
 	}
-
-	result = apart_sorted.front();
 	cout << result << '\n';
 }
 
