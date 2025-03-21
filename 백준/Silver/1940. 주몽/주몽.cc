@@ -1,53 +1,46 @@
 #include <iostream>
+#include <string>
 #include <algorithm>
-#include <vector>
 using namespace std;
 
+int N, M;
+int result = 0;
+int numbers[15000];
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
-    int N;
-    int M;
-    cin>>N;
-    cin>>M;
-    
-    int answer=0;
-    
-    vector<int> list(N,0);
-    
-    for(int i=0; i<N; i++)
-    {
-        cin>>list[i];
-    }
-    
-    sort(list.begin(),list.end());
-    
-    int start =0;
-    int end =N-1;
-    int sum=0;
-    
-    while(start<end)
-    {
-        sum=list[start]+list[end];
-        if(sum>M)
-        {
-            end--;
-        }
-        else if(sum<M)
-        {
-            start++;
-        }
-        else
-        {
-            answer++;
-            end--;
-            start++;
-        }
-    }
+	cin >> N >> M;
+	for (int i = 0; i < N; i++)
+	{
+		cin >> numbers[i];
+	}
 
-    cout<<answer<<endl;
+	sort(numbers, numbers + N);
+	int s = 0;
+	int e = N - 1;
+	while (s < e)
+	{
+		int sum = numbers[s] + numbers[e];
+		if (sum == M)
+		{
+			e--;
+			s++;
+			result++;
+		}
+		else if (sum > M)
+		{
+			e--;
+		}
+		else
+		{
+			s++;
+		}
+	}
+	cout << result << "\n";
 }
+
+
