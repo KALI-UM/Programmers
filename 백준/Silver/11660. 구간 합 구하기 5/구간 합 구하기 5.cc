@@ -1,13 +1,10 @@
 #include <iostream>
-#include <string>
 #include <vector>
-using namespace std;
-
 int N, M;
-int number[1025][1025] = { 0, };
-int dp[1025][1025] = { 0, };
+int numbers[1025][1025];
+int sum[1025][1025];
 
-
+using namespace std;
 int main()
 {
 	ios::sync_with_stdio(false);
@@ -15,24 +12,21 @@ int main()
 	cout.tie(NULL);
 
 	cin >> N >> M;
+
 	for (int i = 1; i <= N; i++)
 	{
 		for (int j = 1; j <= N; j++)
 		{
-			cin >> number[i][j];
-			dp[i][j] = dp[i][j - 1] + dp[i - 1][j] - dp[i - 1][j - 1] + number[i][j];
+			cin >> numbers[i][j];
+			sum[i][j] = sum[i][j - 1] + sum[i-1][j]+numbers[i][j]-sum[i-1][j-1];
 		}
 	}
 
-
-	int a, b, c, d;
-	int result;
+	int x1, y1, x2, y2;
 	for (int i = 0; i < M; i++)
 	{
-		cin >> a >> b >> c >> d;
-		result = dp[c][d] - (dp[c][b - 1] + dp[a - 1][d] - dp[a - 1][b - 1]);
-		cout << result << "\n";
+		cin >> x1 >> y1 >> x2 >> y2;
+		cout << sum[x2][y2] +sum[x1-1][y1-1]-sum[x1-1][y2]-sum[x2][y1-1]<< '\n';
 	}
+
 }
-
-
