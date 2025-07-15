@@ -1,44 +1,24 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
+int N;
 
 using namespace std;
 int main()
 {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
 
-	int N;
 	cin >> N;
-
-	vector<int> v(N,0);
+	vector<int> numbers(N);
 	for (int i = 0; i < N; i++)
 	{
-		int number;
-		cin >> number;
-		
-		v[i] = number;
+		cin >> numbers[i];
 	}
 
-	bool done = false;
-	while (!done)
+	sort(numbers.begin(), numbers.end());
+
+	for (int i = 0; i < N; i++)
 	{
-		done = true;
-		for (int i = 0; i < N-1; i++)
-		{
-			if (v[i] > v[i + 1])
-			{
-				int temp = v[i];
-				v[i] = v[i + 1];
-				v[i + 1] = temp;
-
-				done = false;
-			}
-		}
+		cout << numbers[i] << '\n';
 	}
-
-	for (int& num : v)
-	{
-		cout << num << endl;
-	}
+	
 }
